@@ -291,7 +291,17 @@ export enum ModbusOptionType {
     TcpPort = 'TcpPort',
     UdpPort = 'UdpPort',
     TcpRTUBufferedPort = 'TcpRTUBufferedPort',
-    TelnetPort = 'TelnetPort'
+    TelnetPort = 'TelnetPort',
+	SshPort = "SshPort"
+}
+export enum ModbusToolsType {
+    SerialPort = 'SerialPort',
+    RTUBufferedPort = 'RTUBufferedPort',
+    AsciiPort = 'AsciiPort',
+    HttpPort = 'HttpPort',
+    QuicPort = 'QuicPort',
+    ModbusTcpPort = 'ModbusTcpPort',
+    SshPort = 'SshPort'
 }
 
 export enum ModbusReuseModeType {
@@ -495,7 +505,7 @@ export class DevicesUtils {
         let result = `${DevicesUtils.lineDevice}${DevicesUtils.columnDelimiter}`;
         dkeys.forEach(dk => {
             if (dk !== 'property') {
-                let text = (device[dk]) ? device[dk].toString() : '' || '';
+                let text = (device[dk]) ? device[dk].toString() : '';
                 result += `${text.replace(new RegExp(DevicesUtils.columnDelimiter, 'g'), DevicesUtils.columnMaske)}${DevicesUtils.columnDelimiter}`;
             }
         });

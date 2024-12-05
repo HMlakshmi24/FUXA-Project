@@ -131,6 +131,7 @@
                             </mat-option>
                         </mat-select>
                     </div>
+                    
                     <div style="display: block;margin-bottom: 10px;">
                         <div class="my-form-field" style="display: inline-block;">
                             <span>{{'device.property-serialport' | translate}}</span>
@@ -194,6 +195,17 @@
                                 </mat-option>
                             </mat-select>
                         </div>
+                    
+                    <br /> 
+                        <div class="my-form-field inbk">
+                            <span>{{'device.property-connection-tools' | translate}}</span>
+                            <mat-select [(value)]="data.device.property.connectiontools" style="width: 200px">
+                                <mat-option *ngFor="let value of modbusTcpToolsType" [value]="value">
+                                    {{ value }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                
                         <div class="my-form-field inbk ml10 ftr">
                             <span>{{'device.property-socket-reuse' | translate}}</span>
                             <mat-select [(value)]="data.device.property.socketReuse" style="width: 130px">

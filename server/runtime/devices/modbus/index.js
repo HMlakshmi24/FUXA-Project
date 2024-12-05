@@ -503,6 +503,28 @@ function MODBUSclient(_data, _logger, _events, _runtime) {
                         client.connectTCP(addr, { port: port }, callback);
                     }
                 }
+                if (data.property.connectionOption === ModbusToolsType.QuicPort) {
+                    client.connectUDP(addr, { port: port }, callback);
+                } else if (data.property.connectionOption === ModbusToolsType.ModbusTcpPort) {
+                    if (data.property.socketReuse){
+                        client.linkTcpRTUBuffered(runtime.socketPool.get(data.property.address), callback);
+                    } else {
+                        client.connectTcpRTUBuffered(addr, {port: port}, callback);
+                    }
+                } else if (data.property.connectionOption === ModbusToolsType.SshPort) {
+                    if (data.property.socketReuse) {
+                        client.linkTelnet(runtime.socketPool.get(data.property.address), callback);
+                    } else {
+                        client.connectTelnet(addr, {port: port}, callback);
+                    }
+                } else {
+                    //reuse socket
+                    if (data.property.socketReuse) {
+                        client.linkTCP(runtime.socketPool.get(data.property.address), callback);
+                    } else {
+                        client.connectTCP(addr, { port: port }, callback);
+                    }
+                }
             }
         } catch (err) {
             callback(err);
@@ -814,6 +836,16 @@ const ModbusOptionType = {
     TcpRTUBufferedPort: 'TcpRTUBufferedPort',
     TelnetPort: 'TelnetPort'
 }
+const ModbusToolsType = {
+    SerialPort: 'SerialPort',
+    RTUBufferedPort: 'RTUBufferedPort',
+    AsciiPort: 'AsciiPort',
+    HttpPort: 'HttpPort',
+    QuicPort: 'QuicPort',
+    ModbusTcpPort: 'ModbusTcpPort',
+    SshPort: 'SshPort'
+}
+
 const ModbusReuseModeType = {
     Reuse: 'Reuse',
     ReuseSerial: 'ReuseSerial',
